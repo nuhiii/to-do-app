@@ -29,28 +29,36 @@ while True:
             print(f"{index + 1}. {item}")
 
     elif user_action.startswith("edit"):
-        number = int(user_action[5:])
+        try:
+            number = int(user_action[5:])
 
-        with open("todos.txt", "r") as file:
-            todos = file.readlines()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
-        todos[number - 1] = input("Enter new todo: ") + "\n"
+            todos[number - 1] = input("Enter new todo: ") + "\n"
 
-        with open("todos.txt", "w") as file:
-            file.writelines(todos)
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
+        except ValueError:
+            print("Your command is not valid.")
+            continue
 
     elif user_action.startswith("complete"):
-        number = int(user_action[9:])
+        try:
+            number = int(user_action[9:])
 
-        with open("todos.txt", "r") as file:
-            todos = file.readlines()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
-        completed = todos.pop(number - 1).strip("\n")
+            completed = todos.pop(number - 1).strip("\n")
 
-        with open("todos.txt", "w") as file:
-            file.writelines(todos)
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
 
-        print(f'The to do item "{completed}" was removed from the list.')
+            print(f'The to do item "{completed}" was removed from the list.')
+        except IndexError:
+            print("There is no item with that number.")
+            continue
 
     elif user_action.startswith("exit"):
         break
