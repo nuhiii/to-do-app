@@ -2,7 +2,7 @@ while True:
     user_action = input("Type 'add', 'edit', or 'complete' followed by the todo action, "
                         "or type 'show' to display list or 'exit' to quit program: ").strip()
 
-    if "add" in user_action:
+    if user_action.startswith("add"):
         todo = user_action[4:] + "\n"
 
         # opens existing data from file to preserve
@@ -16,7 +16,7 @@ while True:
         with open("todos.txt", "w") as file:
             file.writelines(todos)
 
-    elif "show" in user_action:
+    elif user_action.startswith("show"):
         with open("todos.txt", "r") as file:
             todos = file.readlines()
 
@@ -28,7 +28,7 @@ while True:
             item = item.strip("\n")
             print(f"{index + 1}. {item}")
 
-    elif "edit" in user_action:
+    elif user_action.startswith("edit"):
         number = int(user_action[5:])
 
         with open("todos.txt", "r") as file:
@@ -39,7 +39,7 @@ while True:
         with open("todos.txt", "w") as file:
             file.writelines(todos)
 
-    elif "complete" in user_action:
+    elif user_action.startswith("complete"):
         number = int(user_action[9:])
 
         with open("todos.txt", "r") as file:
@@ -52,7 +52,7 @@ while True:
 
         print(f'The to do item "{completed}" was removed from the list.')
 
-    elif "exit" in user_action:
+    elif user_action.startswith("exit"):
         break
 
     else:
