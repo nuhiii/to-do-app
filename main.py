@@ -27,24 +27,28 @@ while True:
                 item = item.strip("\n")
                 print(f"{index + 1}. {item}")
         case "edit":
+            number = int(input("Number of the todo to edit: "))
+            todo = input("Enter new todo: ") + "\n"
+
             with open("todos.txt", "r") as file:
                 todos = file.readlines()
 
-            number = int(input("Number of the todo to edit: "))
-            todo = input("Enter new todo: ") + "\n"
             todos[number - 1] = todo
 
             with open("todos.txt", "w") as file:
                 file.writelines(todos)
         case "complete":
+            number = int(input("Number of the todo to complete: "))
+
             with open("todos.txt", "r") as file:
                 todos = file.readlines()
 
-            number = int(input("Number of the todo to complete: "))
-            todos.pop(number - 1)
+            completed = todos.pop(number - 1).strip("\n")
 
             with open("todos.txt", "w") as file:
                 file.writelines(todos)
+
+            print(f'The to do item "{completed}" was removed from the list.')
         case "exit":
             break
         case _:
