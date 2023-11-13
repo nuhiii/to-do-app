@@ -8,9 +8,9 @@ while True:
             todo = input("Enter a todo: ")
             todos.append(todo)
         case "show" | "display":
-            for item in todos:
+            for index, item in enumerate(todos):
                 item = item.title()
-                print(item)
+                print(f"{index}. {item}")
         case "edit":
             number = int(input("Number of the todo to edit: "))
             todo = input("Enter new todo: ")
