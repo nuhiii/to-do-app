@@ -6,48 +6,45 @@ while True:
             todo = input("Enter a todo: ") + "\n"
 
             # opens existing data from file to preserve
-            file = open("todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
             # append new items
             todos.append(todo)
 
             # overwrites with a new file the list data
-            file = open("todos.txt", "w")
-            file.writelines(todos)
-            file.close()
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
         case "show" | "display":
-            file = open("todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
+
+            # # list comprehension to remove the extra \n line that print generates on top of existing \n on list
+            # # when printing to console
+            # new_todos = [item.strip("\n") for item in todos]
 
             for index, item in enumerate(todos):
-                item = item.title()
+                item = item.strip("\n")
                 print(f"{index + 1}. {item}")
         case "edit":
-            file = open("todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
             number = int(input("Number of the todo to edit: "))
             todo = input("Enter new todo: ") + "\n"
             todos[number - 1] = todo
 
-            file = open("todos.txt", "w")
-            file.writelines(todos)
-            file.close()
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
         case "complete":
-            file = open("todos.txt", "r")
-            todos = file.readlines()
-            file.close()
+            with open("todos.txt", "r") as file:
+                todos = file.readlines()
 
             number = int(input("Number of the todo to complete: "))
             todos.pop(number - 1)
 
-            file = open("todos.txt", "w")
-            file.writelines(todos)
-            file.close()
+            with open("todos.txt", "w") as file:
+                file.writelines(todos)
         case "exit":
             break
         case _:
