@@ -3,9 +3,15 @@
 # as we are importing the specific functions we will use
 # if we had a folder named modules where functions.py existed, then we write:
 # from modules import functions
-# with the below, we have to use functions.method() but it makes it easier
+# we can also have the below to not include functions.method():
+# from modules.functions import get_todos, write_todos
+# with the code below, we have to use functions.method() but it makes it easier
 # to see where our functions are coming from
 import functions
+import time
+
+now = time.strftime("%b %d, %Y %H:%M:%S")
+print("It is", now)
 
 while True:
     user_action = input("Type 'add', 'edit', or 'complete' followed by the todo action, "
