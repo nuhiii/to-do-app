@@ -12,10 +12,16 @@ list_box = PySimpleGUI.Listbox(values=functions.get_todos(), key="todos",
                                enable_events=True, size=[45, 10])
 # edit button next to to do list box item
 edit_button = PySimpleGUI.Button("Edit")
+# complete button after edit to mark off tasks
+complete_button = PySimpleGUI.Button("Complete")
+# exit button to quit program
+exit_button = PySimpleGUI.Button("Exit")
 
 # create an instance of a window type
 window = PySimpleGUI.Window("My To-Do App",  # title of the window
-                            layout=[[label], [input_box, add_button], [list_box, edit_button]],  # each row [] of widgets displayed
+                            layout=[[label], [input_box, add_button],
+                                    # each row [] of widgets displayed
+                                    [list_box, edit_button, complete_button], [exit_button]],
                             font=("Helvetica", 20))
 
 # keep the window open
@@ -43,13 +49,21 @@ while True:
 
             # update on the gui
             window["todos"].update(values=todos)
+        case "Complete":
+            todo_complete = values["todo"][0]
+            todos = functions.get_todos()
+            todos.remove(todo_complete)
+            functions.write_todos(todos)
+            window["todos"].update(values=todos)
+            window["todo"].update(value="")
+        case "Exit":
+            break
         case "todos":
             # select item from list box and have it appear on the text field
             window["todo"].update(value=values["todos"][0])
         # close the window gui program when red x button is clicked
         case PySimpleGUI.WIN_CLOSED:
             break
-
 
 # close the window instance
 window.close()
