@@ -7,10 +7,15 @@ label = PySimpleGUI.Text("Type in a to-do")
 input_box = PySimpleGUI.InputText(tooltip="Enter todo", key="todo")
 # button widget
 add_button = PySimpleGUI.Button("Add")
+# read the todos from file function and export them to a list box for display on window
+list_box = PySimpleGUI.Listbox(values=functions.get_todos(), key="todos",
+                               enable_events=True, size=[45, 10])
+# edit button next to to do list box item
+edit_button = PySimpleGUI.Button("Edit")
 
 # create an instance of a window type
 window = PySimpleGUI.Window("My To-Do App",  # title of the window
-                            layout=[[label], [input_box, add_button]],  # each row [] of widgets displayed
+                            layout=[[label], [input_box, add_button], [list_box, edit_button]],  # each row [] of widgets displayed
                             font=("Helvetica", 20))
 
 # keep the window open
@@ -24,6 +29,23 @@ while True:
             new_todo = values['todo'] + "\n"
             todos.append(new_todo)
             functions.write_todos(todos)
+            window["todos"].update(values=todos)
+        case "Edit":
+            # get the edit values
+            todo_edit = values["todos"][0]
+            new_todo = values["todo"] + "\n"
+
+            # update on the text file
+            todos = functions.get_todos()
+            index = todos.index(todo_edit)
+            todos[index] = new_todo
+            functions.write_todos(todos)
+
+            # update on the gui
+            window["todos"].update(values=todos)
+        case "todos":
+            # select item from list box and have it appear on the text field
+            window["todo"].update(value=values["todos"][0])
         # close the window gui program when red x button is clicked
         case PySimpleGUI.WIN_CLOSED:
             break
