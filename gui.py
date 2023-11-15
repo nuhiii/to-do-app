@@ -62,7 +62,7 @@ while True:
                 PySimpleGUI.popup("Please select an item first.", font=("Helvetica", 20))
         case "Complete":
             try:
-                todo_complete = values["todo"][0]
+                todo_complete = values["todos"][0]
                 todos = functions.get_todos()
                 todos.remove(todo_complete)
                 functions.write_todos(todos)
